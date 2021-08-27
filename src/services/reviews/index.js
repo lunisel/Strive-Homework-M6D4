@@ -35,7 +35,9 @@ router
   .route("/:id")
   .get(async (req, res, next) => {
     try {
-      const data = await Review.findByPk(req.params.id);
+      const data = await Review.findByPk(req.params.id, {
+        include: [User, Review],
+      });
       res.send(data);
     } catch (error) {
       console.log(error);

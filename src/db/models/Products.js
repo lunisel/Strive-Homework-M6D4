@@ -24,10 +24,14 @@ const Product = sequelize.define(
     },
     image_url: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+    },
+    ingredients: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },

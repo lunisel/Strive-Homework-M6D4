@@ -12,18 +12,16 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const { name } = req.query;
-      const filter = req.query.name
+      const query = req.query;
+      const filter = query
         ? {
             where: {
-              name: {
-                [Op.iLike]: `%${name}%`,
-              },
+              description: `%${query.description}%`,
             },
           }
         : {};
 
-      console.log({ name: `%${name}` });
+      console.log("NAME ---->", filter);
       const data = await Product.findAll({
         ...filter,
         //  include: [Review, Category],

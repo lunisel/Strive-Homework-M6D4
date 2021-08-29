@@ -12,16 +12,32 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const query = req.query;
-      const filter = query
+      const q = req.query;
+      const filter = q.q
         ? {
             where: {
-              description: `%${query.description}%`,
+              [Op.or]: [
+                {
+                  name: {
+                    [Op.like]: `${q.q}%`,
+                  },
+                },
+                {
+                  description: {
+                    [Op.like]: `%${q.q}%`,
+                  },
+                },
+                {
+                  ingredients: {
+                    [Op.like]: `%${q.q}%`,
+                  },
+                },
+              ],
             },
           }
         : {};
 
-      console.log("NAME ---->", filter);
+      console.log("QUERY ---->", filter);
       const data = await Product.findAll({
         ...filter,
         //  include: [Review, Category],
